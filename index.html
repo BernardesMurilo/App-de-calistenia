@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="Acompanhe seus treinos de calistenia, séries, descanso e evolução.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<title>Calistenia Tracker</title>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">CT</div><div><strong>Calistenia</strong><span>TRACKER</span></div></div>
+  <button id="installBtn" class="icon-btn hidden" aria-label="Instalar aplicativo" title="Instalar aplicativo">＋</button>
+</header>
+<main>
+  <section id="homeView" class="view active">
+    <div class="hero">
+      <div class="eyebrow">SEU TREINO, SUA EVOLUÇÃO</div>
+      <h1>Construa força.<br><em>Um treino de cada vez.</em></h1>
+      <p>Seu plano pessoal de calistenia, com barra fixa, peso corporal e faixa elástica.</p>
+      <div class="hero-stats">
+        <div><strong id="weekCount">0</strong><span>treinos esta semana</span></div>
+        <div><strong id="totalCount">0</strong><span>treinos concluídos</span></div>
+        <div><strong>3×</strong><span>por semana</span></div>
+      </div>
+    </div>
+    <div class="section-heading"><div><span class="eyebrow">PLANO SEMANAL</span><h2>Seus treinos</h2></div><span class="small-muted">A · B · C</span></div>
+    <div id="workoutCards" class="workout-grid"></div>
+    <div class="tip-card"><div class="tip-icon">✦</div><div><strong>Foco na progressão</strong><p>Registre suas repetições e tente evoluir aos poucos, mantendo a execução controlada. Deixe 1–2 repetições “na reserva” na maioria das séries.</p></div></div>
+  </section>
+
+  <section id="workoutView" class="view">
+    <button class="back-btn" id="backHome">← Voltar aos treinos</button>
+    <div class="workout-intro">
+      <div id="workoutPill" class="workout-pill">TREINO A</div>
+      <h1 id="workoutTitle">Força geral</h1>
+      <p id="workoutSubtitle">Costas, peito, pernas e abdômen</p>
+      <div class="progress-line"><div id="workoutProgress"></div></div>
+      <div id="progressText" class="small-muted">0 de 5 exercícios concluídos</div>
+    </div>
+    <div id="exerciseList" class="exercise-list"></div>
+    <div class="finish-panel">
+      <div><strong>Terminou seu treino?</strong><p>Salve a sessão para acompanhar sua evolução no histórico.</p></div>
+      <button id="finishWorkout" class="primary-btn">Concluir treino ✓</button>
+    </div>
+  </section>
+
+  <section id="historyView" class="view">
+    <div class="section-heading"><div><span class="eyebrow">CONSISTÊNCIA GERA RESULTADO</span><h1>Seu histórico</h1></div></div>
+    <div class="history-summary">
+      <div><span class="small-muted">Treinos concluídos</span><strong id="historyTotal">0</strong></div>
+      <div><span class="small-muted">Nesta semana</span><strong id="historyWeek">0</strong></div>
+      <div><span class="small-muted">Últimos 30 dias</span><strong id="historyMonth">0</strong></div>
+    </div>
+    <div class="panel"><div class="panel-head"><h2>Frequência recente</h2><span class="small-muted">últimas 4 semanas</span></div><div id="weeklyChart" class="bar-chart"></div></div>
+    <div class="panel"><div class="panel-head"><h2>Últimos treinos</h2><button id="exportBtn" class="text-btn">Exportar backup ↗</button></div><div id="historyList" class="history-list"></div></div>
+    <div class="panel backup-panel"><div><strong>Seus dados ficam neste celular</strong><p>Exporte um backup para guardar seus registros ou importar em outro navegador.</p></div><div class="backup-actions"><button id="exportBtn2" class="secondary-btn">Exportar JSON</button><label class="secondary-btn file-label">Importar backup<input id="importInput" type="file" accept="application/json"></label></div></div>
+  </section>
+
+  <section id="settingsView" class="view">
+    <div class="section-heading"><div><span class="eyebrow">PERSONALIZE</span><h1>Configurações</h1></div></div>
+    <div class="panel setting-row"><div><strong>Temporizador de descanso</strong><p>Escolha o tempo padrão entre séries.</p></div><select id="defaultRest"><option value="60">60 segundos</option><option value="90" selected>90 segundos</option><option value="120">120 segundos</option><option value="180">180 segundos</option></select></div>
+    <div class="panel"><strong>Sobre seu plano</strong><p>Plano de 3 dias por semana, adequado ao seu nível atual: aproximadamente 6 barras fixas e 15 ou mais flexões. Ajuste repetições de acordo com sua execução e recuperação.</p></div>
+    <div class="panel danger-zone"><strong>Apagar todos os dados</strong><p>Remove o histórico e os registros salvos neste navegador. Esta ação não pode ser desfeita.</p><button id="clearData" class="danger-btn">Apagar dados locais</button></div>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="Navegação principal">
+  <button class="nav-item active" data-view="homeView"><span>⌂</span><small>Treinos</small></button>
+  <button class="nav-item" data-view="historyView"><span>▥</span><small>Histórico</small></button>
+  <button class="nav-item" data-view="settingsView"><span>⚙</span><small>Ajustes</small></button>
+</nav>
+
+<div id="timerDock" class="timer-dock hidden">
+  <div class="timer-copy"><span class="eyebrow">DESCANSO</span><strong id="timerValue">01:30</strong></div>
+  <div class="timer-controls"><button id="timerPause" aria-label="Pausar temporizador">Ⅱ</button><button id="timerReset" aria-label="Reiniciar temporizador">↻</button><button id="timerClose" aria-label="Fechar temporizador">×</button></div>
+  <div class="timer-track"><div id="timerBar"></div></div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
